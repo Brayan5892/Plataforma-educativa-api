@@ -4,6 +4,7 @@ import bcrypt from 'bcryptjs'
 const userSchema = new Schema({
     name: String,
     lastname: String,
+    confirmation: Number,
     email:{
         type: String,
         unique: true
@@ -11,11 +12,7 @@ const userSchema = new Schema({
     password:{
         type: String,
         required: true
-    },
-    roles: [{
-        ref: "Role",
-        type: Schema.Types.ObjectId
-    }]
+    }
     
 },{
     timestamps: true,
