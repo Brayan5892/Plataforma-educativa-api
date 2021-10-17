@@ -8,29 +8,43 @@ import nodemailer from 'nodemailer'
 import hbs from 'nodemailer-express-handlebars'
 import user from '../models/user'
 const path = require('path')
+import { ObjectId } from "mongodb";
 
 export const getCourseByUserId = async(req, res) =>{
     
-    const {name, email, password, lastname} = req.body
-
-    const newUser = new User({
-        name,
-        email,
-        lastname,
-        confirmation:1,
-        password: await User.encryptPassword(password)
-    })
-
+    var id=req.params.userId;
 
     try {
-      const userSaved = await newUser.save();
+        const courses = await UserCourse.find({user:ObjectId(id)})
+        if(courses){
+            res.json(courses)
+        }else{
+            res.json({message:"No se han encontrado cursos para este usuario"})
+        }
     } catch (error) {
-      return res.json({error: error.message})
+        res.json({error:error})
     }
-    
-    const token = jwt.sign({id: newUser._id}, config.SECRET, {expiresIn:'20m'});
 
-    emailController.confirmationEmail(newUser.email, newUser.name, token, res)
 }
 
 
+
+export const createCourse = async(req, res)=>{
+
+    const {name, description} = req.body
+
+    const newCourse = new Course({
+        name, 
+        description
+    })
+    console.log("Llega")
+    
+
+    try {
+      const courseSaved = await newCourse.save();
+      return res.json({course: courseSaved})
+    } catch (error) {
+      return res.json({error: error.message})
+    }
+
+}
