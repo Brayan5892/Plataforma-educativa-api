@@ -6,6 +6,7 @@ import authRoutes from './routes/auth.routes'
 import userRoutes from './routes/user.routes'
 import courseRoutes from './routes/course.routes'
 
+
 const app=express();
 createRoles();
 app.use(cors());
