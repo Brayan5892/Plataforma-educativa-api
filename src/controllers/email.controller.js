@@ -46,6 +46,7 @@ export const confirmationEmail = async(email, name, token, res) =>{
    
       transporter.sendMail(mailOptions, function(error, info){
         if (error){
+          console.log(error)
           return res.json({error: error.message})
         } else {
           return res.json({message:"Correo de activacion de cuenta enviado"})

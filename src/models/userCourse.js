@@ -11,7 +11,8 @@ const userCourseSchema = new Schema({
         type: Schema.Types.ObjectId
     },
     fase:Number,
-    score:Number
+    score:Number,
+    state:String
     
 },{
     timestamps: true,

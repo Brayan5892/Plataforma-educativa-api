@@ -7,4 +7,6 @@ router.get('/getUser/:id', userController.getUserById)
 
 router.get('/getUser', userController.getUserAuthenticate)
 
+router.post('/suscribe', userController.suscribeCourse)
+
 export default router;
