@@ -11,4 +11,6 @@ router.get('/getNewCourses', courseController.getNewCourses)
 
 router.get('/getById/:id', courseController.getById)
 
+
+
 export default router;

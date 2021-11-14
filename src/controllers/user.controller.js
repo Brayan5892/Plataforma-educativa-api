@@ -4,7 +4,9 @@ import jwt from 'jsonwebtoken'
 import config from '../config.js'
 import hbs from 'nodemailer-express-handlebars'
 import user from '../models/user'
+import e from 'express'
 const path = require('path')
+import { ObjectId } from "mongodb";
 
 export const getUserById = async(req, res) =>{
 
@@ -72,5 +74,48 @@ export const suscribeCourse= async(req, res) =>{
 
         }
     })
+
+}
+
+export const findSuscribe = async(req, res) =>{
+
+    const token = req.headers["x-access-token"];
+    
+    if(!token) return res.json({message:"No token provided"})
+
+    jwt.verify(token, config.SECRET, async function  (err, decoded) {
+        if(err){
+            res.json({message:"Token invalido"})
+        }else{
+            req.userId = decoded.id;  
+
+            var id=req.params.courseId;
+            
+            try {
+                const userCourse = await UserCourse.find({course:ObjectId(id), user:ObjectId(req.userId)})
+                if(userCourse.length>0){
+                    res.json({response:userCourse})
+                }else{
+                    res.json({response:userCourse})
+                }
+            } catch (error) {
+                res.json({message: "Se ha producido un error: "+error.message})
+            }
+
+        }
+    })
+
+}
+
+export const uptadeCourseById = async(req,res)=>{
+    
+    try {
+        const UserCourseUpdate = await UserCourse.findByIdAndUpdate(req.params.courseId, req.body,{
+            new : true
+        })
+        res.status(200).json(UserCourseUpdate)
+    } catch (error) {
+        res.json({error: error})
+    }
 
 }

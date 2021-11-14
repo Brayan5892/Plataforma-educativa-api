@@ -9,4 +9,8 @@ router.get('/getUser', userController.getUserAuthenticate)
 
 router.post('/suscribe', userController.suscribeCourse)
 
+router.get('/findSuscribe/:courseId', userController.findSuscribe)
+
+router.put('/usercourse/:courseId', userController.uptadeCourseById)
+
 export default router;
