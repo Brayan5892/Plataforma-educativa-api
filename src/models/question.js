@@ -8,7 +8,7 @@ const questionSchema = new Schema({
     answer3: String,
     answer4: String,
     answerCorrect: Number,
-    course: {
+    course_id: {
         ref: "Course",
         type: Schema.Types.ObjectId
     },
