@@ -6,12 +6,13 @@ import config from '../config.js'
 import hbs from 'nodemailer-express-handlebars'
 import user from '../models/user'
 const path = require('path')
+import { ObjectId } from "mongodb";
 
-export const getUserById = async(req, res) =>{
+export const getQuestionsByCourseId = async(req, res) =>{
 
     try {
-        const user = await User.findById(req.params.id)
-        res.json({user})
+        const question = await Question.find({course_id:ObjectId(req.params.courseId)})
+        res.json({question})
     } catch (error) {
         res.json({message:"Usuario no encontrado"})
     }

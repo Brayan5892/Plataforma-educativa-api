@@ -5,7 +5,7 @@ import {createRoles} from './libs/initialSetup'
 import authRoutes from './routes/auth.routes'
 import userRoutes from './routes/user.routes'
 import courseRoutes from './routes/course.routes'
-
+import questionRoutes from './routes/question.routes'
 
 const app=express();
 createRoles();
@@ -15,8 +15,8 @@ app.use(morgan('dev'));
 app.use(express.json());
 app.use(express.urlencoded({extended: false}));
 
-app.use('/auth',authRoutes)
-app.use('/user',userRoutes)
-app.use('/course',courseRoutes)
-
+app.use('/auth',authRoutes);
+app.use('/user',userRoutes);
+app.use('/course',courseRoutes);
+app.use('/question',questionRoutes);
 export default app

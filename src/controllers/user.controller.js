@@ -110,9 +110,10 @@ export const findSuscribe = async(req, res) =>{
 export const uptadeCourseById = async(req,res)=>{
     
     try {
-        const UserCourseUpdate = await UserCourse.findByIdAndUpdate(req.params.courseId, req.body,{
+        const UserCourseUpdate = await UserCourse.findByIdAndUpdate(ObjectId(req.params.courseId), req.body,{
             new : true
         })
+        console.log(UserCourseUpdate)
         res.status(200).json(UserCourseUpdate)
     } catch (error) {
         res.json({error: error})
