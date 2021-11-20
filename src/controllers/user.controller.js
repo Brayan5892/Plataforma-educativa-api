@@ -1,5 +1,6 @@
 import User from '../models/user'
 import UserCourse from '../models/userCourse'
+import ScoreHistory from '../models/scoreHistory'
 import jwt from 'jsonwebtoken'
 import config from '../config.js'
 import hbs from 'nodemailer-express-handlebars'
@@ -8,6 +9,7 @@ import e from 'express'
 const path = require('path')
 import { ObjectId } from "mongodb";
 import * as emailController from './email.controller.js'
+import { UV_FS_O_FILEMAP } from 'constants'
 export const getUserById = async(req, res) =>{
 
     try {
@@ -113,7 +115,20 @@ export const uptadeCourseById = async(req,res)=>{
         const UserCourseUpdate = await UserCourse.findByIdAndUpdate(ObjectId(req.params.courseId), req.body,{
             new : true
         })
-        console.log(UserCourseUpdate)
+        
+        if(req.body.score){ 
+            const newScoreHistory = new ScoreHistory({
+                userCourse: UserCourseUpdate._id,
+                score:req.body.score
+            })    
+            try{
+                const scoreHistorySaved =  await newScoreHistory.save()
+         
+            }catch (error) {
+                res.json({error: error})
+            }
+        }
+        
         res.status(200).json(UserCourseUpdate)
     } catch (error) {
         res.json({error: error})
@@ -125,7 +140,6 @@ export const uptadeCourseById = async(req,res)=>{
 export const contactMessage = async(req,res)=>{
     
     try {
-        console.log('Entra')
         emailController.contactEmail(req.body.message, res)
     } catch (error) {
         res.json({error: error})
@@ -135,11 +149,7 @@ export const contactMessage = async(req,res)=>{
 
 export const updateUser= async(req, res) =>{  
 
-    const userUpdate = await User.findByIdAndUpdate(req.body.id,{
-        name: req.body.name,
-        academic: req.body.address,
-        email: req.body.email
-    },{
+    const userUpdate = await User.findByIdAndUpdate(ObjectId(req.params.userId), req.body,{
         new:true
     })
     

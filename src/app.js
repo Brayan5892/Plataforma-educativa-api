@@ -6,7 +6,7 @@ import authRoutes from './routes/auth.routes'
 import userRoutes from './routes/user.routes'
 import courseRoutes from './routes/course.routes'
 import questionRoutes from './routes/question.routes'
-
+import scoreHistory from './routes/scoreHistory.routes'
 const app=express();
 createRoles();
 app.use(cors());
@@ -19,4 +19,5 @@ app.use('/auth',authRoutes);
 app.use('/user',userRoutes);
 app.use('/course',courseRoutes);
 app.use('/question',questionRoutes);
+app.use('/scoreHistory',scoreHistory);
 export default app
