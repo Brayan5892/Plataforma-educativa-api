@@ -13,6 +13,8 @@ router.get('/findSuscribe/:courseId', userController.findSuscribe)
 
 router.put('/usercourse/:courseId', userController.uptadeCourseById)
 
+router.put('/', userController.updateUser)
+
 router.post('/message', userController.contactMessage)
 
 export default router;

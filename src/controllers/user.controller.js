@@ -132,3 +132,21 @@ export const contactMessage = async(req,res)=>{
     }
 
 }
+
+export const updateUser= async(req, res) =>{  
+
+    const userUpdate = await User.findByIdAndUpdate(req.body.id,{
+        name: req.body.name,
+        academic: req.body.address,
+        email: req.body.email
+    },{
+        new:true
+    })
+    
+    if(userUpdate){
+        res.json({message:"Se actualizaron sus datos satisfactoriamente"})
+    }else{
+        res.json('No se ha encontrado usuario')
+    }
+       
+}
