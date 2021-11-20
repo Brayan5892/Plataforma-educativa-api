@@ -7,7 +7,7 @@ import user from '../models/user'
 import e from 'express'
 const path = require('path')
 import { ObjectId } from "mongodb";
-
+import * as emailController from './email.controller.js'
 export const getUserById = async(req, res) =>{
 
     try {
@@ -115,6 +115,18 @@ export const uptadeCourseById = async(req,res)=>{
         })
         console.log(UserCourseUpdate)
         res.status(200).json(UserCourseUpdate)
+    } catch (error) {
+        res.json({error: error})
+    }
+
+}
+
+
+export const contactMessage = async(req,res)=>{
+    
+    try {
+        console.log('Entra')
+        emailController.contactEmail(req.body.message, res)
     } catch (error) {
         res.json({error: error})
     }
